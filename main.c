@@ -15,6 +15,26 @@
 
 
 
+typedef struct Order {
+    char itemName[25]; //the item's name
+    int quantity; //number of items
+    float perCost; //this is the cost of each item in this order
+} Order;
+
+
+
+typedef struct Customer {
+    char name[25];
+    Order orders[15];
+    int orderSize;
+    float totalSpent
+} Customer;
+
+
+
+//put the method headers here
+
+
 int main() {
     
     printf("Enter the name of the file containing purchases: ");
@@ -50,3 +70,23 @@ int main() {
     
     return 0;
 }
+
+
+struct Customer* createCustomer(/*in*/char *theName, Order *theOrders ,int theSize, theTotal) {
+
+    Customer* cust = (Customer*) malloc(sizeof(Customer));
+    cust->name = theName;
+    
+    //add theOrders to the Customer's order field.
+    
+    cust->orderSize = theSize;
+    cust->totalSpent = theTotal;
+
+    
+}
+
+
+
+//put the methods down here
+
+
