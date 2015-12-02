@@ -10,15 +10,15 @@
 
 
 
-#ifndef LISTCUSTOMER_H //HELP what is ifndef?
+#ifndef LISTCUSTOMER_H
 #define LISTCUSTOMER_H
 
 
-typedef struct Customer { //HELP Can I also have this exact same thing in main?
-    char name[35];
-    Order orders[15];
-    int orderSize;
-    float totalSpent
+typedef struct Customer {
+    int custID; //the ID of the customer
+    char name[50]; //last, first name of customer
+    float totalSpent; //total $ spent
+    int orderSize; //number of items purchased
 } Customer;
 
 
@@ -33,8 +33,7 @@ typedef struct CustomerList {
 } CustomerList;
 
 
-
-CustomerList createCList(void);
+struct CustomerList* createCList(void);
 void destroyCList(CustomerList l);
 void make_emptyCList(CustomerList l);
 int is_emptyCList(CustomerList l);
@@ -42,13 +41,7 @@ int is_fullCList(CustomerList l);
 void pushCList(CustomerList l, Customer item);
 void deleteCList(CustomerList l, Customer item);
 void printlCList(CustomerList l);
+int containsCust(CustomerList* l, int theID);
+void addToCust(int theID, int price, int quantity);
 
 #endif
-
-
-
-//OLD CODE BELOW
-
-//typedef struct list_type *ListType;
-//typedef int ItemType;
-

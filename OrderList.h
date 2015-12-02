@@ -10,23 +10,17 @@
 
 
 
-#ifndef LISTORDER_H 
+#ifndef LISTORDER_H
 #define LISTORDER_H
 
 
-typedef struct Customer { //HELP Can I also have this exact same thing in main?
-    char name[35];
-    Order orders[15];
-    int orderSize;
-    float totalSpent
-} Customer;
 
 
-typedef struct Order { //HELP can I also have this exact same thing in main?
-    
-    char itemName[25]; //the item's name
-    int quantity; //number of items
+typedef struct Order {
+    int custID; //the ID of the customer who placed this order.
+    char itemName[50]; //the item's name
     float perCost; //this is the cost of each item in this order
+    int quantity; //number of items
 } Order;
 
 
@@ -41,7 +35,7 @@ typedef struct OrderList {
 
 
 
-OrderList createOList(void);
+struct OrderList* createOList(void);
 void destroyOList(OrderList l);
 void make_emptyOList(OrderList l);
 int is_emptyOList(OrderList l);
@@ -51,11 +45,4 @@ void deleteOList(OrderList l, Order item);
 void printlOList(OrderList l);
 
 #endif
-
-
-
-//OLD CODE BELOW
-
-//typedef struct list_type *ListType;
-//typedef int ItemType;
 

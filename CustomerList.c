@@ -22,7 +22,7 @@
 /*creates and returns a list.
  *
  */
-struct CustomerList createCList() {
+struct CustomerList* createCList() {
     
     CustomerList list = malloc( sizeof (CustomerList));
     
@@ -100,6 +100,7 @@ int is_emptyCList(CustomerList l) {
 
 
 
+
 /*
  *
  */
@@ -162,9 +163,45 @@ void deleteCList(CustomerList l, Customer item) {
 void printCList(CustomerList l) {
     int i;
     for(i = 0; i < l->size; i++)
-        printf("%d ", l->data[i]->name); //HELP is this correct?
+        printf("%d ", l->data[i]->name); //HELP is this correct? Try .(dot)name
     printf("\n");
 }
+
+
+
+
+
+/* Checks if the customer is already in the list.
+ *
+ */
+int containsCust(CustomerList* l, int theID) {
+    int i;
+    for (i = 0; i < l->size; i++) {
+        if (l->data[i]->custID == theID) { //CHECK is accessing custID properly?
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+
+/* Adds purchases to an existing customer
+ *
+ */
+void addToCust(int theID, int price, int quantity) {
+    int i;
+    for (i = 0; i < l->size; i++) {
+        if (l->data[i]->custID == theID) { //CHECK is accessing custID properly?
+            
+            l->data[i]->totalSpent += price;
+            l->data[i]->orderSize += quantity;
+        }
+    }
+}
+
+
+
 
 
 

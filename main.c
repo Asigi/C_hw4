@@ -13,26 +13,11 @@
 */
 
 #include "CustomerList.h"
+#include "OrderList.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-
-typedef struct Order {
-    char itemName[25]; //the item's name
-    int quantity; //number of items
-    float perCost; //this is the cost of each item in this order
-} Order;
-
-
-
-typedef struct Customer {
-    char name[25];
-    Order orders[15];
-    int orderSize;
-    float totalSpent
-} Customer;
 
 
 
@@ -64,22 +49,32 @@ int main() {
     
     
     int id;
-    char last_name[15];
-    char first_name[15];
+    char last_name[25];
+    char first_name[25];
     char item_name[20];
     float item_price;
-    int item quantity;
+    int item_quantity;
     
     
-    while (fscanf (input, "%d %s %s %s %f %d", &id, last_name, first_name, item_name, item_price, quantity) != EOF) {
+    while (fscanf (input, "%d %s %s %s %f %d",
+                   &id, last_name, first_name, item_name, item_price, item_quantity) != EOF) {
         
-        //check if customer is already in CustomerList.
+        char combine_name[50];
+        strcpy(combine_name, last_name);
+        strcat(combine_name, " ");
+        strcat(combine_name, first_name);
         
         
-        //HELP create a customer object and add it to the list? or plug in these values into a function in CustList which will create the Customer object itself and add it?
+        if (containsCust(clist, id)) { //check if customer is already in CustomerList.
+            addToCust(id, item_price, item_quantity)
+            
+        } else {
+            
+            Customer* cust = createCustomer(id, combine_name, item_price, item_quantity);
+            
         
-        //also figure out customer uniqueness. How not to add duplicate customers.
-        
+        }
+    
     }
 
     
@@ -95,16 +90,14 @@ int main() {
 
 
 
-
-
-//TODO Maybe, instead of putting this here I can put it within the CustomerList class where the customer will be created and added to the list?
-struct Customer* createCustomer(/*in*/char *theName, Order *theOrders ,int theSize, theTotal) {
+//Note that theTotal is the total cost of the order (or item_price)
+struct Customer* createCustomer(int theID, /*in*/char *theName,
+                                int theTotal, theSize) {
 
     Customer* cust = (Customer*) malloc(sizeof(Customer));
+    
+    cust->custID = theID;
     cust->name = theName;
-    
-    //add theOrders to the Customer's order field.
-    
     cust->orderSize = theSize;
     cust->totalSpent = theTotal;
 
