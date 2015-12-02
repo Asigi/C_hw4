@@ -22,30 +22,39 @@
 
 
 //put the method headers here
+struct Customer* createCustomer(int theID, /*in*/char *theName, int theTotal, int theSize);
+struct Order* createOrder(int theID, char *theName, int theCost, int theAmount);
 
 
 int main() {
     
     printf("Enter the name of the file containing purchases: ");
     
-    char nameFile[256];
-    scanf( "%s" , nameFile);
+    char nameFile[100];
+    scanf("%s", nameFile);
+    
+    printf("scanned in %s\n file", nameFile);
     
     FILE* input = fopen(nameFile, "r");
+    
+    
+    if( input == NULL ) {
+        printf("Program was not able to open the file\n");
+        fclose(input);
+        return 0; //end of main run.
+    }
+    
+    printf("the input file is not null");
+    
+    
     
     FILE* output1 = fopen("orders.txt", "w");
     FILE* output2 = fopen("revenue.txt", "w");
     
     
-    if( input == NULL ) {
-        printf("Program was not able to open the file\n");
-        return 0; //end of main run.
-    }
     
-    
-    
-    CustomerList* cList = creatCList();
-    
+    CustomerList* cList = createCList();
+    OrderList* oList = createOList();
     
     
     int id;
@@ -57,7 +66,7 @@ int main() {
     
     
     while (fscanf (input, "%d %s %s %s %f %d",
-                   &id, last_name, first_name, item_name, item_price, item_quantity) != EOF) {
+                   &id, last_name, first_name, item_name, &item_price, &item_quantity) != '\n') {
         
         char combine_name[50];
         strcpy(combine_name, last_name);
@@ -65,14 +74,24 @@ int main() {
         strcat(combine_name, first_name);
         
         
-        if (containsCust(clist, id)) { //check if customer is already in CustomerList.
-            addToCust(id, item_price, item_quantity)
+        if (containsCust(cList, id)) { //check if customer is already in CustomerList.
+            addToCust(cList, id, item_price, item_quantity);
+            
+            //Add to list of orders
+            Order* ord = createOrder(id, item_name, item_price, item_quantity);
+            pushOList(oList, ord);
+            //TODO free ord?
             
         } else {
             
             Customer* cust = createCustomer(id, combine_name, item_price, item_quantity);
-            
-        
+            pushCList(cList, cust);
+            //TODO free cust?
+
+            //Add to list of orders
+            Order* ord = createOrder(id, item_name, item_price, item_quantity);
+            pushOList(oList, ord);
+            //TODO free ord?
         }
     
     }
@@ -81,23 +100,30 @@ int main() {
     
     
     
+    //TODO read below
+    //First print out orders.txt because that file needs the customers to be in order of input.
+    //Then sort customerlist (with customer who has highest totalSpent coming first)
+    //Then print out revenue.txt which will need to be sorted by customer's spending (high to low)
     
+    fclose(input);
+    fclose(output1);
+    fclose(output2);
     
-    
-    
+    printf("Reach end of main function");
     return 0;
 }
 
 
 
-//Note that theTotal is the total cost of the order (or item_price)
-struct Customer* createCustomer(int theID, /*in*/char *theName,
-                                int theTotal, theSize) {
+/* Creates and returns a customer struct.
+ *
+ */
+struct Customer* createCustomer(int theID, /*in*/char *theName, int theTotal,  int theSize) {
 
     Customer* cust = (Customer*) malloc(sizeof(Customer));
     
     cust->custID = theID;
-    cust->name = theName;
+    strcpy(cust->name, theName);
     cust->orderSize = theSize;
     cust->totalSpent = theTotal;
 
@@ -106,6 +132,56 @@ struct Customer* createCustomer(int theID, /*in*/char *theName,
 
 
 
+/* Creates and returns an order struct.
+ *
+ */
+struct Order* createOrder(int theID, char *theName, int theCost, int theAmount) {
+    
+    Order* ord = (Order*) malloc(sizeof(Order));
+    
+    ord->custID = theID;
+    strcpy(ord->itemName , theName);
+    ord->perCost = theCost;
+    ord->quantity = theAmount;
+    
+    return ord;
+}
+
+
+
 //put the methods down here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

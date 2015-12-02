@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define CUST_LIST_MAX = 100;
+#define CUST_LIST_MAX  100
 
 
 
@@ -24,7 +24,7 @@
  */
 struct CustomerList* createCList() {
     
-    CustomerList list = malloc( sizeof (CustomerList));
+    CustomerList* list = (CustomerList*) malloc( sizeof (CustomerList));
     
     if (list != NULL) {
         list->size = 0;
@@ -45,7 +45,7 @@ struct CustomerList* createCList() {
 /*destroys the data in a list.
  *
  */
-void destroyCList(CustomerList l) {
+void destroyCList(CustomerList* l) {
     free(l->data);
     free(l);
     l = NULL;
@@ -58,20 +58,20 @@ void destroyCList(CustomerList l) {
 /*Adds a component to the array, if enough memory available.
  *If enough memory is not available, then increase the size of the array and then add.
  */
-void pushCList(CustomerList l, Customer item) {
+void pushCList(CustomerList* l, Customer* item) {
     if (l->size >= l->capacity) {
-        ItemType * temp = malloc(sizeof(Customer) * (l->capacity + 100));
+        Customer * temp = malloc(sizeof(Customer) * (l->capacity + 100));
         if (temp != NULL) {
             l->capacity += 100;
-            memcpy(temp, l->data,sizeof(ItemType) * (l->size));
+            memcpy(temp, l->data,sizeof(Customer) * (l->size));
             free(l->data);
             l->data = temp;
-            l->data[l->size] = item;
+            l->data[l->size] = *item;
             l->size++;
         }
     }
     else {
-        l->data[l->size] = item;
+        l->data[l->size] = *item;
         l->size++;
     }
 }
@@ -82,7 +82,7 @@ void pushCList(CustomerList l, Customer item) {
 /* Returns the size of the list.
  *
  */
-int size_isCList(CustomerList l) {
+int size_isCList(CustomerList* l) {
     return l->size;
 }
 
@@ -93,7 +93,7 @@ int size_isCList(CustomerList l) {
 /* Returns 1 if the list is empty. 0 otherwise.
  *
  */
-int is_emptyCList(CustomerList l) {
+int is_emptyCList(CustomerList* l) {
     return l->size == 0;
 }
 
@@ -104,10 +104,10 @@ int is_emptyCList(CustomerList l) {
 /*
  *
  */
-void make_emptyCList(CustomerList l) {
+void make_emptyCList(CustomerList* l) {
     // if list is larger than 200 elements, create a smaller one
     if (l->size > 200)
-        l->data = realloc(l->data, sizeof(ItemType) * 100);
+        l->data = realloc(l->data, sizeof(Customer) * 100);
     
     l->size = 0;
     l->capacity = 100;
@@ -119,9 +119,9 @@ void make_emptyCList(CustomerList l) {
 /* Tells you if the list is full.
  *
  */
-int is_fullCList(CustomerList l) {
+int is_fullCList(CustomerList* l) {
     if (l->size >= l->capacity) {
-        ItemType * temp = malloc(sizeof(ItemType) * (l->capacity + 100));
+        Customer * temp = malloc(sizeof(Customer) * (l->capacity + 100));
         if (temp != NULL) {
             free(temp);
             return 0;
@@ -139,18 +139,18 @@ int is_fullCList(CustomerList l) {
 /* Deletes the given customer from the list.
  *
  */
-void deleteCList(CustomerList l, Customer item) {
+void deleteCList(CustomerList* list, Customer* item) {
     
     int idx = -1, i;
     
-    for (i = 0; i < l->size; i++ ) {
-        if (l->data[i] == item) {
+    for (i = 0; i < list->size; i++ ) {
+        if (list->data[i].custID == item->custID) {
             idx = i;
             break;
         }
     }
     if (idx >= 0) 
-        l->data[idx] = l->data[--l->size];
+        list->data[idx] = list->data[--list->size];
     
 }
 
@@ -160,10 +160,10 @@ void deleteCList(CustomerList l, Customer item) {
 /*
  * Prints the contents of the list.
  */
-void printCList(CustomerList l) {
+void printCList(CustomerList* l) {
     int i;
     for(i = 0; i < l->size; i++)
-        printf("%d ", l->data[i]->name); //HELP is this correct? Try .(dot)name
+        printf("%s ", l->data[i].name); //HELP is this correct? Try .(dot)name
     printf("\n");
 }
 
@@ -174,10 +174,10 @@ void printCList(CustomerList l) {
 /* Checks if the customer is already in the list.
  *
  */
-int containsCust(CustomerList* l, int theID) {
+int containsCust(CustomerList* list, int theID) {
     int i;
-    for (i = 0; i < l->size; i++) {
-        if (l->data[i]->custID == theID) { //CHECK is accessing custID properly?
+    for (i = 0; i < list->size; i++) {
+        if (list->data[i].custID == theID) {
             return 1;
         }
     }
@@ -189,13 +189,13 @@ int containsCust(CustomerList* l, int theID) {
 /* Adds purchases to an existing customer
  *
  */
-void addToCust(int theID, int price, int quantity) {
+void addToCust(CustomerList* l, int theID, int price, int quantity) {
     int i;
     for (i = 0; i < l->size; i++) {
-        if (l->data[i]->custID == theID) { //CHECK is accessing custID properly?
+        if (l->data[i].custID == theID) {
             
-            l->data[i]->totalSpent += price;
-            l->data[i]->orderSize += quantity;
+            l->data[i].totalSpent += price;
+            l->data[i].orderSize += quantity;
         }
     }
 }

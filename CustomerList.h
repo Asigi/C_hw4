@@ -34,14 +34,14 @@ typedef struct CustomerList {
 
 
 struct CustomerList* createCList(void);
-void destroyCList(CustomerList l);
-void make_emptyCList(CustomerList l);
-int is_emptyCList(CustomerList l);
-int is_fullCList(CustomerList l);
-void pushCList(CustomerList l, Customer item);
-void deleteCList(CustomerList l, Customer item);
-void printlCList(CustomerList l);
+void destroyCList(CustomerList* l);
+void make_emptyCList(CustomerList* l);
+int is_emptyCList(CustomerList* l);
+int is_fullCList(CustomerList* l);
+void pushCList(CustomerList* l, Customer* item);
+void deleteCList(CustomerList* l, Customer* item);
+void printlCList(CustomerList* l);
 int containsCust(CustomerList* l, int theID);
-void addToCust(int theID, int price, int quantity);
+void addToCust(CustomerList*, int theID, int price, int quantity);
 
 #endif

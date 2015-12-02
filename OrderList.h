@@ -36,13 +36,13 @@ typedef struct OrderList {
 
 
 struct OrderList* createOList(void);
-void destroyOList(OrderList l);
-void make_emptyOList(OrderList l);
-int is_emptyOList(OrderList l);
-int is_fullOList(OrderList l);
-void pushOList(OrderList l, Order item);
-void deleteOList(OrderList l, Order item);
-void printlOList(OrderList l);
+void destroyOList(OrderList* l);
+void make_emptyOList(OrderList* l);
+int is_emptyOList(OrderList* l);
+int is_fullOList(OrderList* l);
+void pushOList(OrderList* l, Order* item);
+void deleteOList(OrderList* l, Order* item);
+void printlOList(OrderList* l);
 
 #endif
 
