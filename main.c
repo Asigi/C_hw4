@@ -12,7 +12,11 @@
  
 */
 
+#include "CustomerList.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 
 typedef struct Order {
@@ -53,13 +57,27 @@ int main() {
         return 0; //end of main run.
     }
     
+    CustomerList cList = creatCList();
     
-    //take in customer id,
-    //take in customer last name (plus comma) and then take in first name.
-        //add first name after last name and a comma and a space
-    //take in item name
-    //take in item price
-    //take in item quantity
+    int id;
+    char last_name[15];
+    char first_name[15];
+    char item_name[20];
+    float item_price;
+    int item quantity;
+    
+    
+    while (fscanf (input, "%d %s %s %s %f %d", &id, last_name, first_name, item_name, item_price, quantity) != EOF) {
+        
+        //check if customer is already in CustomerList.
+        
+        
+        //HELP create a customer object and add it to the list? or plug in these values into a function in CustList which will create the Customer object itself and add it?
+        
+        //also figure out customer uniqueness. How not to add duplicate customers.
+        
+    }
+
     
     
     
@@ -72,6 +90,10 @@ int main() {
 }
 
 
+
+
+
+//TODO Maybe, instead of putting this here I can put it within the CustomerList class where the customer will be created and added to the list?
 struct Customer* createCustomer(/*in*/char *theName, Order *theOrders ,int theSize, theTotal) {
 
     Customer* cust = (Customer*) malloc(sizeof(Customer));
@@ -82,7 +104,7 @@ struct Customer* createCustomer(/*in*/char *theName, Order *theOrders ,int theSi
     cust->orderSize = theSize;
     cust->totalSpent = theTotal;
 
-    
+    return cust;
 }
 
 
