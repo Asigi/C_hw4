@@ -57,7 +57,11 @@ int main() {
         return 0; //end of main run.
     }
     
-    CustomerList cList = creatCList();
+    
+    
+    CustomerList* cList = creatCList();
+    
+    
     
     int id;
     char last_name[15];

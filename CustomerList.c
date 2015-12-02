@@ -45,7 +45,7 @@ struct CustomerList createCList() {
 /*destroys the data in a list.
  *
  */
-void destroyCList(ListType l) {
+void destroyCList(CustomerList l) {
     free(l->data);
     free(l);
     l = NULL;
@@ -159,7 +159,7 @@ void deleteCList(CustomerList l, Customer item) {
 /*
  * Prints the contents of the list.
  */
-void printlCList(CustomerList l) {
+void printCList(CustomerList l) {
     int i;
     for(i = 0; i < l->size; i++)
         printf("%d ", l->data[i]->name); //HELP is this correct?
