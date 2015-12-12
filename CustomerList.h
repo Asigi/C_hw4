@@ -5,7 +5,7 @@
 //Homework 4
 
 /* Logic explaining my code:
- 
+    header
 */
 
 
@@ -40,7 +40,7 @@ int is_emptyCList(CustomerList* l);
 int is_fullCList(CustomerList* l);
 void pushCList(CustomerList* l, Customer* item);
 void deleteCList(CustomerList* l, Customer* item);
-void printlCList(CustomerList* l);
+void printCList(CustomerList* l);
 int containsCust(CustomerList* l, int theID);
 void addToCust(CustomerList*, int theID, int price, int quantity);
 

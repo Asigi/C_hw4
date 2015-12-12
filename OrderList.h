@@ -5,7 +5,7 @@
 //Homework 4
 
 /* Logic explaining my code:
- 
+    header
  */
 
 
@@ -42,7 +42,7 @@ int is_emptyOList(OrderList* l);
 int is_fullOList(OrderList* l);
 void pushOList(OrderList* l, Order* item);
 void deleteOList(OrderList* l, Order* item);
-void printlOList(OrderList* l);
+void printOList(OrderList* l);
 
 #endif
 
